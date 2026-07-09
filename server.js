@@ -15,7 +15,12 @@ app.get("/", async (req, res) => {
     res.set("Content-Type", "application/json");
     res.status(response.status).send(data);
   } catch (err) {
-    res.status(500).json({ error: "Proxy failed", details: err.message });
+    console.error("Proxy error:", err);
+    res.status(500).json({
+      error: "Proxy failed",
+      message: err.message,
+      cause: err.cause ? String(err.cause) : null
+    });
   }
 });
 
